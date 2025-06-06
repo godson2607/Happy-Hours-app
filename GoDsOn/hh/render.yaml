@@ -1,0 +1,23 @@
+# render.yaml
+services:
+  - type: web
+    name: happy-hour-finder
+    env: python
+    buildCommand: "./build.sh" # Optional: if you have a build script, otherwise Render runs Dockerfile
+    # This specifies that Render should build and deploy a Docker image
+    dockerfilePath: Dockerfile
+    healthCheckPath: /
+    # The port your application listens on, exposed in your Dockerfile
+    port: 8000
+    envVars:
+      # These environment variables will be passed to your Docker container at runtime.
+      # Replace with your actual secret keys.
+      - key: FASTAPI_API_KEY
+        sync: false # Set to false for sensitive variables
+        value: your_fastapi_secret_key_here # Will be overridden by Render secret config
+      - key: TAVILY_API_KEY
+        sync: false
+        value: your_tavily_api_key_here # Will be overridden by Render secret config
+      - key: WHISTLE_API_KEY
+        sync: false
+        value: your_whistle_api_key_here # Will be overridden by Render secret config
